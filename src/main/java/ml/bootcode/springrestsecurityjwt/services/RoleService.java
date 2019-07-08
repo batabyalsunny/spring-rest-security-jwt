@@ -4,6 +4,7 @@
 package ml.bootcode.springrestsecurityjwt.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -19,26 +20,51 @@ public class RoleService {
 
 	private RoleRepository roleRepository;
 
+	/**
+	 * @param roleRepository
+	 */
+	public RoleService(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
+	}
+
 	public List<Role> getRoles() {
-		return null;
+		return roleRepository.findAll();
 	}
 
 	public Role getRoleById(Long id) {
-		return null;
+		return validateRoleOptional(roleRepository.findById(id));
 	}
 
 	public Role getRoleByName(String name) {
-		return null;
+		return validateRoleOptional(roleRepository.findByName(name));
 	}
 
-	public Role addRole() {
-		return null;
+	public Role addRole(Role role) {
+		if (roleRepository.findByName(role.getName()).isPresent()) {
+			throw new RuntimeException("Role already exists");
+		}
+
+		return roleRepository.save(role);
 	}
 
-	public Role updateRole(Role role) {
-		return null;
+	public Role updateRole(Long id, Role role) {
+		Role existingRole = validateRoleOptional(roleRepository.findById(id));
+
+		existingRole.setName(role.getName());
+		existingRole.setAuthorities(role.getAuthorities());
+
+		return roleRepository.save(existingRole);
 	}
 
-	public void deleteRole() {
+	public void deleteRole(Long id) {
+		roleRepository.delete(validateRoleOptional(roleRepository.findById(id)));
+	}
+
+	public Role validateRoleOptional(Optional<Role> roleOptional) {
+		if (!roleOptional.isPresent()) {
+			throw new RuntimeException("Role not found");
+		}
+
+		return roleOptional.get();
 	}
 }

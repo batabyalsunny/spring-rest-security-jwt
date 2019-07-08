@@ -1,0 +1,61 @@
+/**
+ * 
+ */
+package ml.bootcode.springrestsecurityjwt.controllers;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import ml.bootcode.springrestsecurityjwt.dtos.UserDto;
+import ml.bootcode.springrestsecurityjwt.services.UserService;
+
+/**
+ * @author sunnyb
+ *
+ */
+@RestController
+@RequestMapping("users")
+public class UserController {
+
+	private UserService userService;
+
+	/**
+	 * @param userService
+	 */
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
+
+	@GetMapping
+	public List<UserDto> getUsers() {
+		return userService.getUsers();
+	}
+
+	@GetMapping("{id}")
+	public UserDto getUser(@RequestParam Long id) {
+		return userService.getUserById(id);
+	}
+
+	@PostMapping
+	public UserDto addUser(@RequestBody UserDto userDto) {
+		return userService.addUser(userDto);
+	}
+
+	@PutMapping("{id}")
+	public UserDto updateUser(@RequestParam Long id, @RequestBody UserDto userDto) {
+		return userService.updateUser(id, userDto);
+	}
+
+	@DeleteMapping("{id}")
+	public void deleteUser(@RequestParam Long id) {
+		userService.deleteUser(id);
+	}
+}

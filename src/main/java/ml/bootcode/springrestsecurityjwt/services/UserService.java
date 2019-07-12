@@ -22,6 +22,13 @@ public class UserService {
 
 	private UserRepository userRepository;
 
+	/**
+	 * @param userRepository
+	 */
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
 	public List<UserDto> getUsers() {
 		return userRepository.findAll().stream().map(user -> mapUserToUserDto(user)).collect(Collectors.toList());
 	}

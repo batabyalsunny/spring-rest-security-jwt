@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ml.bootcode.springrestsecurityjwt.dtos.UserDto;
@@ -40,7 +40,7 @@ public class UserController {
 	}
 
 	@GetMapping("{id}")
-	public UserDto getUser(@RequestParam Long id) {
+	public UserDto getUser(@PathVariable Long id) {
 		return userService.getUserById(id);
 	}
 
@@ -50,12 +50,12 @@ public class UserController {
 	}
 
 	@PutMapping("{id}")
-	public UserDto updateUser(@RequestParam Long id, @RequestBody UserDto userDto) {
+	public UserDto updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
 		return userService.updateUser(id, userDto);
 	}
 
 	@DeleteMapping("{id}")
-	public void deleteUser(@RequestParam Long id) {
+	public void deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);
 	}
 }

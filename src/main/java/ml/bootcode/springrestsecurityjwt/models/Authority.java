@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author sunnybatabyal
  *
@@ -23,7 +25,8 @@ public class Authority {
 	private Long id;
 	private String name;
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "authorities")
+	@JsonIgnore
 	private List<Role> roles;
 
 	/**

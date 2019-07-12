@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ml.bootcode.springrestsecurityjwt.models.Authority;
@@ -22,18 +22,25 @@ import ml.bootcode.springrestsecurityjwt.services.AuthorityService;
  *
  */
 @RestController
-@RequestMapping("/authorities")
+@RequestMapping("authorities")
 public class AuthorityController {
 
 	private AuthorityService authorityService;
 
-	@GetMapping("/")
+	/**
+	 * @param authorityService
+	 */
+	public AuthorityController(AuthorityService authorityService) {
+		this.authorityService = authorityService;
+	}
+
+	@GetMapping
 	public List<Authority> getAuthorities() {
 		return authorityService.getAuthorities();
 	}
 
 	@GetMapping("{id}")
-	public Authority getAuthority(@RequestParam Long id) {
+	public Authority getAuthority(@PathVariable Long id) {
 		return authorityService.getAuthorityById(id);
 	}
 
@@ -43,12 +50,12 @@ public class AuthorityController {
 	}
 
 	@PutMapping("{id}")
-	public Authority updateAuthority(@RequestParam Long id, @RequestBody Authority authority) {
+	public Authority updateAuthority(@PathVariable Long id, @RequestBody Authority authority) {
 		return authorityService.updateAuthority(id, authority);
 	}
 
 	@DeleteMapping("{id}")
-	public void deleteAuthority(@RequestParam Long id) {
+	public void deleteAuthority(@PathVariable Long id) {
 		authorityService.deleteAuthority(id);
 	}
 }

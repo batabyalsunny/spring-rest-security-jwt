@@ -22,6 +22,13 @@ public class AuthController {
 
 	private UserService userService;
 
+	/**
+	 * @param userService
+	 */
+	public AuthController(UserService userService) {
+		this.userService = userService;
+	}
+
 	@PostMapping("login")
 	public LoginResponseDto login(LoginRequestDto loginRequestDto) {
 		return null;

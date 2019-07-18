@@ -3,7 +3,9 @@
  */
 package ml.bootcode.springrestsecurityjwt.controllers;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -31,5 +33,12 @@ public class MainController {
 	@GetMapping("edit")
 	public String edit() {
 		return "Edited";
+	}
+
+	@GetMapping("me")
+	@ResponseBody
+	public String me(Authentication authentication) {
+		System.out.println(authentication.toString());
+		return authentication.getName();
 	}
 }

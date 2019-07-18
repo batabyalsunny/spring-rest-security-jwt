@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ml.bootcode.springrestsecurityjwt.bootstrap;
 
@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import ml.bootcode.springrestsecurityjwt.models.Authority;
@@ -27,17 +28,20 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	private AuthorityRepository authorityRepository;
 	private RoleRepository roleRepository;
 	private UserRepository userRepository;
+	private PasswordEncoder passwordEncoder;
 
 	/**
 	 * @param authorityRepository
 	 * @param roleRepository
 	 * @param userRepository
+	 * @param passwordEncoder
 	 */
 	public InitialDataLoader(AuthorityRepository authorityRepository, RoleRepository roleRepository,
-			UserRepository userRepository) {
+			UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.authorityRepository = authorityRepository;
 		this.roleRepository = roleRepository;
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -85,12 +89,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		// Create users.
 		User adminUser = new User();
 		adminUser.setEmail("sunny");
-		adminUser.setPassword("sunny");
+		adminUser.setPassword(passwordEncoder.encode("sunny"));
 		adminUser.setRoles(Arrays.asList(adminRole));
 
 		User testUser = new User();
 		testUser.setEmail("test");
-		testUser.setPassword("test");
+		testUser.setPassword(passwordEncoder.encode("test"));
 		testUser.setRoles(Arrays.asList(artistRole, customerRole));
 
 		adminUser = userRepository.save(adminUser);

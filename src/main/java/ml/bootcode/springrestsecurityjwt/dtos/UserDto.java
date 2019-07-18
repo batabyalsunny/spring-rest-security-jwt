@@ -16,6 +16,21 @@ public class UserDto {
 	private Long id;
 	private String email;
 	private List<Role> roles;
+	private String password;
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	/**
 	 * @return the id

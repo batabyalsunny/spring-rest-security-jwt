@@ -54,6 +54,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Set authentication entry point.
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
 
+		// Set logout success handler.
+		http.logout().logoutSuccessHandler(logoutSuccessHandler);
+
 		// Disable session management and set to stateless.
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
@@ -63,11 +66,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// Apply Jwt security filter.
 		http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
-
-//		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/auth/**").permitAll().anyRequest()
-//		.authenticated().and().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and()
-//		.logout().logoutSuccessHandler(logoutSuccessHandler).and().sessionManagement()
-//		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	}
 
 	@Bean

@@ -36,11 +36,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenProvider {
 
-	@Value("${security.jwt.token.secret-key:secret-key}")
+	@Value("${ml.bootcode.jwt.token.secret-key:secret-key}")
 	private String secretKey;
 
-	@Value("${security.jwt.token.expire-length:3600000}")
-	private long validityInMilliseconds = 60000; // 1Min
+	@Value("${ml.bootcode.jwt.token.expire-time-mills:3600000}")
+	private long validityInMilliseconds; // 1Min
 
 	private SecurityUserDetailsService userDetailsService;
 
@@ -71,6 +71,9 @@ public class JwtTokenProvider {
 
 		Date now = new Date();
 		Date validity = new Date(now.getTime() + validityInMilliseconds);
+
+		System.out.println(validityInMilliseconds);
+		System.out.println(secretKey);
 
 		return Jwts.builder().setClaims(claims).setIssuedAt(now).setExpiration(validity)
 				.signWith(SignatureAlgorithm.HS256, secretKey).compact();

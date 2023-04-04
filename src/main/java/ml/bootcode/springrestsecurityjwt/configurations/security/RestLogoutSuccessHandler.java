@@ -25,6 +25,7 @@ public class RestLogoutSuccessHandler implements LogoutSuccessHandler {
 			throws IOException, ServletException {
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.getWriter().flush();
+		
 	}
 
 }

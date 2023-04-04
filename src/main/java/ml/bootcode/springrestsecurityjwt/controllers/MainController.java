@@ -3,8 +3,11 @@
  */
 package ml.bootcode.springrestsecurityjwt.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.server.authorization.AuthorizationContext;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +23,9 @@ public class MainController {
 		return "Hello";
 	}
 
-	@GetMapping("view")
-	public String view() {
+	@PreAuthorize("#name == authentication.name && hasRole(\"STUDIO\")")
+	@GetMapping("view/{name}")
+	public String view(@PathVariable("name") String name) {
 		return "Viewed";
 	}
 
